@@ -14,22 +14,18 @@
 
 3. Dataset:
 - Download the original dataset locally (Kaggle: https://www.kaggle.com/datasets/megancrenshaw/home-credit-default-risk/data).
-- Các file chính:
-	. application_train.csv / application_test.csv: Thông tin chính về khách hàng (demographic, thu nhập, tài sản, …).
+- Các file chính: application_train.csv / application_test.csv: Thông tin chính về khách hàng (demographic, thu nhập, tài sản, …).
 - Các file phụ:
-	. bureau.csv / bureau_balance.csv: Lịch sử tín dụng của khách hàng tại các tổ chức khác.
-	. previous_application.csv: Thông tin các khoản vay trước đây tại Home Credit.
-	. POS_CASH_balance.csv: Lịch sử giao dịch POS/consumer loan.
-	. installments_payments.csv: Lịch sử trả nợ (đúng hạn, trễ hạn).
-	. credit_card_balance.csv: Hành vi sử dụng thẻ tín dụng.
+	- bureau.csv / bureau_balance.csv: Lịch sử tín dụng của khách hàng tại các tổ chức khác.
+	- previous_application.csv: Thông tin các khoản vay trước đây tại Home Credit.
+	- POS_CASH_balance.csv: Lịch sử giao dịch POS/consumer loan.
+	- installments_payments.csv: Lịch sử trả nợ (đúng hạn, trễ hạn).
+	- credit_card_balance.csv: Hành vi sử dụng thẻ tín dụng.
 - Mục tiêu: TARGET (1 = vỡ nợ, 0 = trả nợ đầy đủ).
 - Place the CSV files in data/
 - Update the path glob to your machine, e.g.:
- 	# before (example Windows path)
-	path = r"D:\...\*.csv"
-	# after (relative to repo)
-	path = r"./data/*.csv"
-- 
+ 	before (example Windows path): path = r"D:\...\*.csv"
+	after (relative to repo): path = r"./data/*.csv"
 
 4. Cấu trúc Project:
 
@@ -69,38 +65,38 @@
 
 5. Quy trình (Pipeline):
 - Khám phá dữ liệu (EDA):
-	. Đọc & kiểm tra dữ liệu.
-	. Phân phối nhãn (TARGET).
-	. Thống kê các biến:
-		. Biến Numerical: "AMT_INCOME_TOTAL", "AMT_CREDIT", "AMT_ANNUITY", "DAYS_BIRTH", "DAYS_EMPLOYED"
-		. Biến Categorical: "NAME_CONTRACT_TYPE", "CODE_GENDER", "FLAG_OWN_CAR", "FLAG_OWN_REALTY"
-	. ![Missing values overview](images/Missing Value.png)
-	. ![Correlation Heatmap](images/Correlation Heatmap.png)
-	. Outlier detection
+	- Đọc & kiểm tra dữ liệu.
+	- Phân phối nhãn (TARGET).
+	- Thống kê các biến:
+		- Biến Numerical: "AMT_INCOME_TOTAL", "AMT_CREDIT", "AMT_ANNUITY", "DAYS_BIRTH", "DAYS_EMPLOYED"
+		- Biến Categorical: "NAME_CONTRACT_TYPE", "CODE_GENDER", "FLAG_OWN_CAR", "FLAG_OWN_REALTY"
+	- ![Missing values overview](images/Missing Value.png)
+	- ![Correlation Heatmap](images/Correlation Heatmap.png)
+	- Outlier detection
 - Xử lý dữ liệu & Feature Engineering:
-	. Tiền xử lý:
-		. Gộp train + test để One-Hot Encode (OHE) các biến phân loại.
-		. Chuẩn hóa tên cột (loại ký tự đặc biệt).
-		. Điền missing values (-999).
-	. Feature Engineering từ các bảng phụ:
-		. bureau + bureau_balance: tổng hợp theo SK_ID_CURR (mean, max, min, var, count).
-		. previous_application: tổng hợp theo SK_ID_CURR.
-		. installments_payments: tạo đặc trưng về tỷ lệ trả nợ đúng hạn.
-		. POS_CASH_balance, credit_card_balance: tổng hợp hành vi vay/thanh toán.
-	. Chuẩn hóa dữ liệu sau khi merge.
+	- Tiền xử lý:
+		- Gộp train + test để One-Hot Encode (OHE) các biến phân loại.
+		- Chuẩn hóa tên cột (loại ký tự đặc biệt).
+		- Điền missing values (-999).
+	- Feature Engineering từ các bảng phụ:
+		- bureau + bureau_balance: tổng hợp theo SK_ID_CURR (mean, max, min, var, count).
+		- previous_application: tổng hợp theo SK_ID_CURR.
+		- installments_payments: tạo đặc trưng về tỷ lệ trả nợ đúng hạn.
+		- POS_CASH_balance, credit_card_balance: tổng hợp hành vi vay/thanh toán.
+	- Chuẩn hóa dữ liệu sau khi merge.
 - Mô hình (Modeling):
-	. Sử dụng LightGBM Classifier, Logistic Regression (chuẩn hóa dữ liệu, regularization).
-	. Chiến lược huấn luyện:
-		. 5-Fold Cross Validation.
-		. Early stopping để tránh overfitting.
-	. Siêu tham số (params): learning_rate, num_leaves, max_depth, feature_fraction, …
+	- Sử dụng LightGBM Classifier, Logistic Regression (chuẩn hóa dữ liệu, regularization).
+	- Chiến lược huấn luyện:
+		- 5-Fold Cross Validation.
+		- Early stopping để tránh overfitting.
+	- Siêu tham số (params): learning_rate, num_leaves, max_depth, feature_fraction, …
 - Đánh giá mô hình (Evaluation):
-	. Cross-validation AUC trung bình trên 5 folds.
-	. AUC-ROC
-	. Lấy Out-of-Fold predictions.
-	. ![Top 30 Feature Importances](images/Top Feature.png)
+	- Cross-validation AUC trung bình trên 5 folds.
+	- AUC-ROC
+	- Lấy Out-of-Fold predictions.
+	- ![Top 30 Feature Importances](images/Top Feature.png)
 - Kết quả Submission:
-	. File submission.csv gồm: 
+	- File submission.csv gồm: 
 		SK_ID_CURR, TARGET  
 		100001, 0.0450  
 		100005, 0.1174  
