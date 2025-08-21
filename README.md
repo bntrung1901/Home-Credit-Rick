@@ -1,10 +1,10 @@
-🏦 Home Credit Default Risk Prediction
-1. Giới thiệu:
+### 🏦 Home Credit Default Risk Prediction
+#### 1. Giới thiệu:
 - Bối cảnh: Dự đoán rủi ro tín dụng (khả năng vỡ nợ của khách hàng dựa trên dữ liệu tín dụng, hồ sơ cá nhân và lịch sử vay nợ).
 - Dữ liệu: Home Credit Default Risk (Kaggle).
 - Mục tiêu: Xây dựng mô hình ML dự đoán xác suất khách hàng vỡ nợ, hỗ trợ ngân hàng ra quyết định chấp thuận hoặc từ chối khoản vay.
 
-2. Setup:
+#### 2. Setup:
 - Tạo môi trường ảo (khuyến nghị):
    ```bash
    python -m venv venv
@@ -12,7 +12,7 @@
    venv\Scripts\activate      # Windows
 - Cài đặt thư viện: pip install -r requirements.txt
 
-3. Dataset:
+#### 3. Dataset:
 - Download the original dataset locally (Kaggle: https://www.kaggle.com/datasets/megancrenshaw/home-credit-default-risk/data).
 - Các file chính: application_train.csv / application_test.csv: Thông tin chính về khách hàng (demographic, thu nhập, tài sản, …).
 - Các file phụ:
@@ -24,11 +24,11 @@
 - Mục tiêu: TARGET (1 = vỡ nợ, 0 = trả nợ đầy đủ).
 - Place the CSV files in data/
 - Update the path glob to your machine, e.g.:
- 	before (example Windows path): path = r"D:\...\*.csv"
-	after (relative to repo): path = r"./data/*.csv"
+	- before (example Windows path): path = r"D:\...\*.csv"
+	- after (relative to repo): path = r"./data/*.csv"
 
-4. Cấu trúc Project:
-
+#### 4. Cấu trúc Project:
+```
 ├── Notebooks/ Home_credit.ipynb
 ├── Data/
 │   ├── application_train.csv
@@ -42,9 +42,9 @@
 ├── Output/
 │   └── submission.csv
 ├── Images/
-│   ├── Correlation Heatmap.png
-│   ├── Missing Value.png
-│   ├── Top Feature.png
+│   ├── Correlation_Heatmap.png
+│   ├── Missing_Value.png
+│   ├── Top_Feature.png
 │   ├── Outlier/
 │   │	├── Credit.png
 │   │	├── Income.png
@@ -62,16 +62,17 @@
 ├── README.md
 ├── LICENSE.md
 └── requirements.txt
+```
 
-5. Quy trình (Pipeline):
+#### 5. Quy trình (Pipeline):
 - Khám phá dữ liệu (EDA):
 	- Đọc & kiểm tra dữ liệu.
 	- Phân phối nhãn (TARGET).
 	- Thống kê các biến:
 		- Biến Numerical: "AMT_INCOME_TOTAL", "AMT_CREDIT", "AMT_ANNUITY", "DAYS_BIRTH", "DAYS_EMPLOYED"
 		- Biến Categorical: "NAME_CONTRACT_TYPE", "CODE_GENDER", "FLAG_OWN_CAR", "FLAG_OWN_REALTY"
-	- ![Missing values overview](images/Missing Value.png)
-	- ![Correlation Heatmap](images/Correlation Heatmap.png)
+	- ![Missing values overview](images/Missing_Value.png)
+	- ![Correlation Heatmap](images/Correlation_Heatmap.png)
 	- Outlier detection
 - Xử lý dữ liệu & Feature Engineering:
 	- Tiền xử lý:
@@ -94,7 +95,7 @@
 	- Cross-validation AUC trung bình trên 5 folds.
 	- AUC-ROC
 	- Lấy Out-of-Fold predictions.
-	- ![Top 30 Feature Importances](images/Top Feature.png)
+	- ![Top 30 Feature Importances](images/Top_Feature.png)
 - Kết quả Submission:
 	- File submission.csv gồm: 
 		SK_ID_CURR, TARGET  
@@ -102,33 +103,33 @@
 		100005, 0.1174  
 		…  
 
-6. Kết quả:
+#### 6. Kết quả:
 - Baseline Logistic Regression: AUC ~0.65
 - LightGBM với Feature Engineering: AUC ~0.77 (Cross-validation)
 
-7. Insight từ Feature Importance: 
+#### 7. Insight từ Feature Importance: 
 - DAYS_BIRTH (tuổi khách hàng): Người trẻ tuổi có rủi ro cao hơn.
 - EXT_SOURCE_1/2/3 (điểm tín dụng ngoài): Yếu tố quan trọng nhất, thể hiện sức mạnh của external credit scoring.
 - DAYS_EMPLOYED (số ngày đi làm): Người có việc làm ổn định có rủi ro thấp hơn.
 - PAYMENT_RATIO (tỷ lệ số tiền đã trả / số tiền phải trả): Trả đúng hạn giảm đáng kể khả năng vỡ nợ.
 
-8. Công nghệ sử dụng:
+#### 8. Công nghệ sử dụng:
 - Python: pandas, numpy, matplotlib, seaborn
 - Machine Learning: scikit-learn, LightGBM
 - Visualization: matplotlib, seaborn
 - Environment: Jupyter Notebook để phân tích và trình bày kết quả.
 - GitHub để lưu trữ và chia sẻ dự án.
 
-9. Hướng phát triển:
+#### 9. Hướng phát triển:
 - Thử nghiệm thêm các mô hình: XGBoost, CatBoost, Neural Network.
 - Feature selection để giảm kích thước dữ liệu.
 - Tối ưu hyperparameters bằng Optuna/GridSearch.
 - Ensemble nhiều mô hình.
 - Triển khai thành API để scoring khách hàng mới.
 
-📄 License
+#### 📄 License
 MIT — see LICENSE.
 
-👤 Tác giả
+#### 👤 Tác giả
 Leo Trung - Email: bntrung1901@gmail.com
 
