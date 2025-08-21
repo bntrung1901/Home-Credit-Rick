@@ -71,8 +71,8 @@
 	- Thống kê các biến:
 		- Biến Numerical: "AMT_INCOME_TOTAL", "AMT_CREDIT", "AMT_ANNUITY", "DAYS_BIRTH", "DAYS_EMPLOYED"
 		- Biến Categorical: "NAME_CONTRACT_TYPE", "CODE_GENDER", "FLAG_OWN_CAR", "FLAG_OWN_REALTY"
-	- ![Missing values overview](images/Missing_Value.png)
-	- ![Correlation Heatmap](images/Correlation_Heatmap.png)
+	- ![Missing values overview](Images/Missing_Value.png)
+	- ![Correlation Heatmap](Images/Correlation_Heatmap.png)
 	- Outlier detection
 - Xử lý dữ liệu & Feature Engineering:
 	- Tiền xử lý:
@@ -95,7 +95,7 @@
 	- Cross-validation AUC trung bình trên 5 folds.
 	- AUC-ROC
 	- Lấy Out-of-Fold predictions.
-	- ![Top 30 Feature Importances](images/Top_Feature.png)
+	- ![Top 30 Feature Importances](Images/Top_Feature.png)
 - Kết quả Submission:
 	- File submission.csv gồm: 
 		SK_ID_CURR, TARGET  
